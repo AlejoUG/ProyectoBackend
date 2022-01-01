@@ -1,4 +1,4 @@
-package com.backend.Controller;
+package com.backend.Crud.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

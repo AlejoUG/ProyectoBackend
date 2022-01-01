@@ -2,17 +2,18 @@ create database bd_Banco;
 USE bd_Banco;
 
 create table clientes(
-	numCuenta int primary key,
-    tipCuenta varchar(50) not null,
-    Nombres varchar(50) not null,
-    Apellidos varchar(50) not null,
-    tpIdentificacion varchar(50) not null,
-    numIdentificacion int UNIQUE,
+	num_Cuenta integer not null,
+    tip_Cuenta varchar(50) not null,
+    nombres varchar(50) not null,
+    apellidos varchar(50) not null,
+    tp_Identificacion varchar(50) not null,
+    num_Identificacion integer UNIQUE,
     email  varchar(50) not null unique,  
-    fechaNacimiento date not null,
-    fechaIngreso  TIMESTAMP not null,
+    fecha_Nacimiento varchar(50) not null,
+    fecha_Ingreso  varchar(50) not null,
     estado varchar(50) not null,
-    saldo int default 0
+    saldo integer,
+    primary key (num_Cuenta)
 );
 
 create table movimientos(
@@ -25,15 +26,15 @@ create table movimientos(
 );
 
 /*Insertar clientess*/
-insert into clientes (numCuenta,tipCuenta, Nombres, Apellidos, tpIdentificacion, numIdentificacion, 
-email, fechaNacimiento, fechaIngreso, estado) 
+insert into clientes (num_Cuenta,tip_Cuenta, Nombres, Apellidos, tp_Identificacion, num_Identificacion, 
+email, fecha_Nacimiento, fecha_Ingreso, estado) 
 values (FLOOR(1+ RAND() * 9999), 'Ahorro', 'Alejandro', 'Utria Garcia', 'C.C', 1065829434,
 'alejandroutriag@gmail.com', '1996-10-03',now(), 'Activo');
 
-insert into clientes (numCuenta,tipCuenta, Nombres, Apellidos, tpIdentificacion, numIdentificacion, 
-email, fechaNacimiento, fechaIngreso, estado) 
+insert into clientes (num_Cuenta,tip_Cuenta, Nombres, Apellidos, tp_Identificacion, num_Identificacion, 
+email, fecha_Nacimiento, fecha_Ingreso, estado) 
 values (FLOOR(1+ RAND() * 9999), 'Ahorro', 'Alejandro', 'Utria Garcia', 'C.C', 106582944,
-'alejandroutriag@hotmail.com', '1996-10-03',now(), 'Activo');
+'alejandroutriag@hotmail.com', '1996-10-03',(now()), 'Activo');
 
 /*Insertar Movimientos*/
 insert into movimientos (numCuenta, tpMovimiento, valorMonto, fechaMovimiento) 
@@ -48,7 +49,7 @@ drop table clientes;
 /* Consultar tablas*/
 select * from clientes;
 select * from movimientos;
-
+select now();
 /*Actualizar campo de tabla*/
 UPDATE clientes SET cl_email ='andres@hotmail.com' WHERE cl_numid = 106582944;
 /*DELETE FROM clientes WHERE cl_numid=106582944;
