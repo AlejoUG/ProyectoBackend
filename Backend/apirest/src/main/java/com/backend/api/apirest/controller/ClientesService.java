@@ -1,6 +1,9 @@
 package com.backend.api.apirest.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +18,18 @@ public class ClientesService {
 	public void guardar(Clientes clientes){
 		clientesRepository.save(clientes);
 	}
-	
-	public List<Clientes> obtenertodos(){
-		return clientesRepository.findAll();
-	}
-	
+		
 	public Clientes obtenerCliente(Integer numCuenta) {
 		return clientesRepository.getOne(numCuenta);	
 	}
 	
-	public void actualizar(Clientes clientes) {
-		clientesRepository.save(clientes);
+	@Transactional // modificar datos clientes
+	public Clientes save(Clientes clientes) {
+		return clientesRepository.save(clientes);
+	}
+	
+	public Optional<Clientes> findByNumCuenta(Integer numCuenta){
+		return clientesRepository.findByNumCuenta(numCuenta);
 	}
 	
 	public void eliminar(Integer numCuenta) {
@@ -36,9 +40,10 @@ public class ClientesService {
 		return clientesRepository.buscarClientesActivos(numCuenta, estado);
 	}
 	
-	public void setClientes(String nombre, String apellidos, String tpIdentificacion, Integer numIdentificacion,
-			String email, String fechaNacimiento, Integer numCuenta) {
-		clientesRepository.setClientesInfoById(nombre, apellidos, tpIdentificacion, numIdentificacion, email, fechaNacimiento, numCuenta);;
-	}
+	
+	
+	/*public void setClientesInfoById(Integer numCuenta) {
+		clientesRepository.setClientesInfoById(nombre, apellidos, tpIdentificacion, numIdentificacion, email, fechaNacimiento, numCuenta);
+	}*/
 	
 }
