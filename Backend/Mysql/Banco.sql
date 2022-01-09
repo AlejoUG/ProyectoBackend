@@ -2,54 +2,70 @@ create database bd_Banco;
 USE bd_Banco;
 
 create table clientes(
-	num_Cuenta integer not null,
-    tip_Cuenta varchar(50) not null,
+	num_Identificacion bigint unique,
     nombres varchar(50) not null,
     apellidos varchar(50) not null,
     tp_Identificacion varchar(50) not null,
-    num_Identificacion integer UNIQUE,
     email  varchar(50) not null unique,  
-    fecha_Nacimiento varchar(50) not null,
-    fecha_Ingreso  varchar(50) not null,
-    estado varchar(50) not null,
-    saldo integer,
-    primary key (num_Cuenta)
+    fecha_Nacimiento date not null,
+    fecha_Creacion  timestamp not null,
+    contrasenia varchar(50) not null,
+    primary key(num_Identificacion)
 );
 
+create table productos(
+	num_Cuenta bigint unique not null,
+    tip_Cuenta varchar(50) not null,
+    cl_num_Identificacion Bigint not null unique,
+    estado varchar(50) not null,
+    saldo double,
+    fecha_apertura varchar(50) not null,
+    primary key (num_Cuenta),
+    FOREIGN KEY (cl_num_Identificacion) REFERENCES clientes (num_Identificacion)
+);
+insert into productos (num_Cuenta, tip_Cuenta, cl_num_Identificacion,estado,saldo,fecha_apertura)
+values((RAND() * (9999999999 - 1)) + 1,'Ahorro',87945612,'Activo',0,now());
 create table movimientos(
-	id int auto_increment primary key,
-    numCuenta int not null,
-    tpMovimiento varchar(50) not null,
-    valorMonto int not null,
-    fechaMovimiento TIMESTAMP not null,
-    FOREIGN KEY (numCuenta) REFERENCES clientes (numCuenta)
+	id bigint auto_increment primary key,
+    pronum_Cuenta bigint not null,
+    tp_Movimiento varchar(50) not null,
+    monto double not null,
+    fecha_Movimiento TIMESTAMP not null,
+    FOREIGN KEY (pronum_Cuenta) REFERENCES productos (num_Cuenta)
 );
 
 /*Insertar clientess*/
-insert into clientes (num_Cuenta,tip_Cuenta, Nombres, Apellidos, tp_Identificacion, num_Identificacion, 
-email, fecha_Nacimiento, fecha_Ingreso, estado) 
-values (FLOOR(1+ RAND() * 9999), 'Ahorro', 'Alejandro', 'Utria Garcia', 'C.C', 1065829434,
-'alejandroutriag@gmail.com', '1996-10-03',now(), 'Activo');
+insert into clientes (nombres, apellidos, tp_Identificacion, num_Identificacion, 
+email, fecha_Nacimiento, fecha_Creacion, contrasenia) 
+values ('Alejandro', 'Utria Garcia', 'C.C', 1065829434, 'alejandroutriag@gmail.com',
+ '1996-10-03', now(), '123456789aug');
 
-insert into clientes (num_Cuenta,tip_Cuenta, Nombres, Apellidos, tp_Identificacion, num_Identificacion, 
-email, fecha_Nacimiento, fecha_Ingreso, estado) 
-values (FLOOR(1+ RAND() * 9999), 'Ahorro', 'Alejandro', 'Utria Garcia', 'C.C', 106582944,
-'alejandroutriag@hotmail.com', '1996-10-03',(now()), 'Activo');
+insert into clientes (Nombres, Apellidos, tp_Identificacion, num_Identificacion, 
+email, fecha_Nacimiento, fecha_Creacion, contrasenia) 
+values ('Rafael Jose', 'Mercado Arias', 'C.C', 87945612, 'rafael@gmail.com',
+ '1985-02-10', now(), '123456789fgh');
+
+/*Insertar Productos*/
+
 
 /*Insertar Movimientos*/
-insert into movimientos (numCuenta, tpMovimiento, valorMonto, fechaMovimiento) 
-values (2094, 'Transferencia', 60000, now());
-insert into movimientos (numCuenta, tpMovimiento, valorMonto, fechaMovimiento) 
-values (5174, 'consignacion',100000, now());
+insert into movimientos (pronum_Cuenta, tp_Movimiento, monto, fecha_Movimiento) 
+values (1987013452, 'Transferencia', 60000.021456, now());
 
 /*Eliminar tablas*/
 drop table movimientos;
+drop table productos;
 drop table clientes;
 
 /* Consultar tablas*/
 select * from clientes;
 select * from movimientos;
+select * from productos;
 select now();
+
+delete from clientes where num_Identificacion=1065829434 and exists (select estado from productos p
+where p.cl_num_Identificacion=1065829434 and p.estado='Cancelado');
+update productos set estado='Activo', saldo=20000 where num_cuenta=2546714204;
 /*Actualizar campo de tabla*/
 UPDATE clientes SET cl_email ='andres@hotmail.com' WHERE cl_numid = 106582944;
 /*DELETE FROM clientes WHERE cl_numid=106582944;

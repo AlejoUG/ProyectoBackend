@@ -3,14 +3,10 @@ package com.backend.api.apirest.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.Hibernate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,10 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Clientes {
 	@Id
 	@Column
-	//@GeneratedValue
-	private Integer numCuenta;
-	@Column
-	private String tipCuenta;
+	private Long numIdentificacion;
 	@Column
 	private String nombres;
 	@Column
@@ -31,36 +24,25 @@ public class Clientes {
 	@Column
 	private String tpIdentificacion;
 	@Column
-	private Integer numIdentificacion;
-	@Column
 	private String email;
 	@Column
-	private String fechaNacimiento;
+	@Temporal(TemporalType.DATE)
+	private java.util.Date fechaNacimiento;
 	@Column
-	private String fechaIngreso;
+	@Temporal(TemporalType.TIMESTAMP)
+	private java.util.Date fechaCreacion;
 	@Column
-	private String estado;
-	@Column
-	private Integer saldo;
+	private String contrasenia;
 	
 	public Clientes(){}
 
-	public Integer getNumCuenta() {
-		return numCuenta;
+	public Long getNumIdentificacion() {
+		return numIdentificacion;
 	}
 
-	public void setNumCuenta(Integer numCuenta) {
-		this.numCuenta = numCuenta;
+	public void setNumIdentificacion(Long numIdentificacion) {
+		this.numIdentificacion = numIdentificacion;
 	}
-
-	public String getTipCuenta() {
-		return tipCuenta;
-	}
-
-	public void setTipCuenta(String tipCuenta) {
-		this.tipCuenta = tipCuenta;
-	}
-
 
 	public String getNombres() {
 		return nombres;
@@ -86,14 +68,6 @@ public class Clientes {
 		this.tpIdentificacion = tpIdentificacion;
 	}
 
-	public Integer getNumIdentificacion() {
-		return numIdentificacion;
-	}
-
-	public void setNumIdentificacion(Integer numIdentificacion) {
-		this.numIdentificacion = numIdentificacion;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -101,48 +75,36 @@ public class Clientes {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	public String getFechaNacimiento() {
+
+	public java.util.Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(java.util.Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public String getFechaIngreso() {
-		return fechaIngreso;
+	public java.util.Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFechaIngreso(String fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
+	public void setFechaCreacion(java.util.Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getContrasenia() {
+		return contrasenia;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public Integer getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(Integer saldo) {
-		this.saldo = saldo;
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 
 	@Override
 	public String toString() {
-		return "Clientes [numCuenta=" + numCuenta + ", tipCuenta=" + tipCuenta + ", nombres=" + nombres + ", apellidos="
-				+ apellidos + ", tpIdentificacion=" + tpIdentificacion + ", numIdentificacion=" + numIdentificacion
-				+ ", email=" + email + ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso
-				+ ", estado=" + estado + ", saldo=" + saldo + "]";
+		return "Clientes [numIdentificacion=" + numIdentificacion + ", nombres=" + nombres + ", apellidos=" + apellidos
+				+ ", tpIdentificacion=" + tpIdentificacion + ", email=" + email + ", fechaNacimiento=" + fechaNacimiento
+				+ ", fechaCreacion=" + fechaCreacion + ", contrasenia=" + contrasenia + "]";
 	}
-	
-	
 	
 }

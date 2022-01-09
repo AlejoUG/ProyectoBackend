@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.api.apirest.model.Clientes;
+import com.backend.api.apirest.service.ClientesService;
+import com.backend.api.apirest.service.ProductosService;
 
 @RestController
 @RequestMapping("api/clientes")
@@ -30,21 +32,26 @@ public class ClientesController {
 	@Autowired
 	private ClientesService clientesService;
 	
-	@PostMapping
+	@PostMapping //Ingresar un cliente
 	public Clientes guardarClientes(@RequestBody Clientes clientes) {
 		System.out.println(clientes);
 		clientesService.guardar(clientes);
 		return clientes;
 	}
 	
-	@GetMapping("/clientes/{numCuenta}")
-	public Clientes obtenerCliente(@PathVariable("numCuenta") Integer numCuenta) {
-		return clientesService.obtenerCliente(numCuenta);
+	@GetMapping
+	public List<Clientes> obtenerClientes() {
+		return clientesService.findAll();
 	}
 	
-	@PutMapping("/clientes/{numCuenta}")
-	public ResponseEntity<?> actualizarCliente(@RequestBody Clientes clientesDetalles, @PathVariable("numCuenta") Integer numCuenta){
-		Optional<Clientes> clientes = clientesService.findByNumCuenta(numCuenta);
+	@GetMapping("/{numIdentificacion}") //Obtener un cliente
+	public Clientes obtenerCliente(@PathVariable("numIdentificacion") Long numIdentificacion) {
+		return clientesService.obtenerCliente(numIdentificacion);
+	}
+	
+	@PutMapping("/{numIdentificacion}") //Modificar datos basicos de un cliente
+	public ResponseEntity<?> actualizarCliente(@RequestBody Clientes clientesDetalles, @PathVariable("numIdentificacion") Long numIdentificacion){
+		Optional<Clientes> clientes = clientesService.findByNumIdentificacion(numIdentificacion);
 		
 		if(!clientes.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -59,16 +66,17 @@ public class ClientesController {
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(clientesService.save(clientes.get()));
 	}
-			
-	@DeleteMapping("/clientes/{numCuenta}")
-	public void eliminar(@PathVariable("numCuenta") Integer numCuenta) {
-		clientesService.eliminar(numCuenta);
+	
+	@DeleteMapping("/{numIdentificacion}") //Eliminar cliente
+	public void eliminarClientesCancelados(@PathVariable("numIdentificacion") Long numIdentificacion) {
+		clientesService.eliminarClientesCancelados(numIdentificacion);
 	}
 	
+	/*	
 	@GetMapping("/clientes/{numCuenta}/estado")
 	public List<Clientes> obtenerClientesActivos(@PathVariable("numCuenta") Integer numCuenta, 
 			@PathParam("estado") String estado) {
 		return clientesService.buscarClientesActivos(numCuenta, estado);
-	}
+	}*/
 	
 }

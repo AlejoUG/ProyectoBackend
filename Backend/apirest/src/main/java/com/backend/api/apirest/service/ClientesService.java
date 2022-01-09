@@ -1,13 +1,13 @@
-package com.backend.api.apirest.controller;
+package com.backend.api.apirest.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.backend.api.apirest.model.Clientes;
+import com.backend.api.apirest.repository.ClientesRepository;
 
 @Service
 public class ClientesService {
@@ -15,22 +15,36 @@ public class ClientesService {
 	@Autowired
 	private ClientesRepository clientesRepository;
 	
+	//Obtener clientes
+	public List<Clientes> findAll(){
+		return clientesRepository.findAll();
+	}
+	
+	//Obtener cliente 
+	public Clientes obtenerCliente(Long numIdentificacion) {
+		return clientesRepository.getOne(numIdentificacion);	
+	}
+	
+	//Crear cliente
 	public void guardar(Clientes clientes){
 		clientesRepository.save(clientes);
 	}
-		
-	public Clientes obtenerCliente(Integer numCuenta) {
-		return clientesRepository.getOne(numCuenta);	
-	}
 	
-	@Transactional // modificar datos clientes
+	@Transactional // Modificar datos clientes
 	public Clientes save(Clientes clientes) {
 		return clientesRepository.save(clientes);
 	}
 	
-	public Optional<Clientes> findByNumCuenta(Integer numCuenta){
-		return clientesRepository.findByNumCuenta(numCuenta);
+	public Optional<Clientes> findByNumIdentificacion(Long numIdentificacion){
+		return clientesRepository.findByNumIdentificacion(numIdentificacion);
 	}
+	
+	@Transactional //Eliminar clientes
+	public void eliminarClientesCancelados(Long numIdentificacion) {
+		clientesRepository.eliminarClientesCancelados(numIdentificacion);
+	}
+		
+	/*
 	
 	public void eliminar(Integer numCuenta) {
 		clientesRepository.deleteById(numCuenta);

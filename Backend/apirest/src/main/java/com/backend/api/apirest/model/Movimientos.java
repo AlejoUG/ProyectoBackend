@@ -5,63 +5,79 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "movimientos")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
 public class Movimientos {
 	
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	@Column
-	private String numCuenta;
+	@JoinColumn(name = "numCuenta")
+	private Long pronumCuenta;
 	@Column
 	private String tpMovimiento;
 	@Column
-    private Integer valorMonto;
+    private Double monto;
 	@Column
-    private String fechaMovimiento;
+	@Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date fechaMovimiento;
 	
-	public Integer getId() {
+	public Movimientos(){}
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNumCuenta() {
-		return numCuenta;
+
+	public Long getPro_numCuenta() {
+		return pronumCuenta;
 	}
-	public void setNumCuenta(String numCuenta) {
-		this.numCuenta = numCuenta;
+
+	public void setPro_numCuenta(Long pronumCuenta) {
+		this.pronumCuenta = pronumCuenta;
 	}
+
 	public String getTpMovimiento() {
 		return tpMovimiento;
 	}
+
 	public void setTpMovimiento(String tpMovimiento) {
 		this.tpMovimiento = tpMovimiento;
 	}
-	public Integer getValorMonto() {
-		return valorMonto;
+
+	public Double getMonto() {
+		return monto;
 	}
-	public void setValorMonto(Integer valorMonto) {
-		this.valorMonto = valorMonto;
+
+	public void setMonto(Double monto) {
+		this.monto = monto;
 	}
-	public String getFechaMovimiento() {
+
+	public java.util.Date getFechaMovimiento() {
 		return fechaMovimiento;
 	}
-	public void setFechaMovimiento(String fechaMovimiento) {
+
+	public void setFechaMovimiento(java.util.Date fechaMovimiento) {
 		this.fechaMovimiento = fechaMovimiento;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Movimientos [id=" + id + ", numCuenta=" + numCuenta + ", tpMovimiento=" + tpMovimiento + ", valorMonto="
-				+ valorMonto + ", fechaMovimiento=" + fechaMovimiento + "]";
+		return "Movimientos [id=" + id + ", pronumCuenta=" + pronumCuenta + ", tpMovimiento=" + tpMovimiento
+				+ ", monto=" + monto + ", fechaMovimiento=" + fechaMovimiento + "]";
 	}
 	
 }
