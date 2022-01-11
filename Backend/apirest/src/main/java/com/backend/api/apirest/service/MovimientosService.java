@@ -2,6 +2,8 @@ package com.backend.api.apirest.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,10 @@ public class MovimientosService {
 	public List<Movimientos> buscarMovimientosClientes(Long pronumCuenta){
 		return movimientosRepository.buscarMovimientosClientes(pronumCuenta);
 	}
+	
+	/*@Transactional
+	public void actualizarConsignacion(Long pronumCuenta){
+		movimientosRepository.actualizarConsignacion(pronumCuenta);
+	}*/
 	
 }

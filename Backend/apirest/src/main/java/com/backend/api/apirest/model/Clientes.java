@@ -26,11 +26,11 @@ public class Clientes {
 	@Column
 	private String email;
 	@Column
-	@Temporal(TemporalType.DATE)
-	private java.util.Date fechaNacimiento;
+	//@Temporal(TemporalType.DATE)
+	private String fechaNacimiento;
 	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private java.util.Date fechaCreacion;
+	//@Temporal(TemporalType.TIMESTAMP)
+	private String fechaCreacion;
 	@Column
 	private String contrasenia;
 	
@@ -76,19 +76,19 @@ public class Clientes {
 		this.email = email;
 	}
 
-	public java.util.Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(java.util.Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public java.util.Date getFechaCreacion() {
+	public String getFechaCreacion() {
 		return fechaCreacion;
 	}
 
-	public void setFechaCreacion(java.util.Date fechaCreacion) {
+	public void setFechaCreacion(String fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 

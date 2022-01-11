@@ -9,7 +9,7 @@ create table clientes(
     email  varchar(50) not null unique,  
     fecha_Nacimiento date not null,
     fecha_Creacion  timestamp not null,
-    contrasenia varchar(50) not null,
+    contrasenia varchar(50),
     primary key(num_Identificacion)
 );
 
@@ -18,13 +18,13 @@ create table productos(
     tip_Cuenta varchar(50) not null,
     cl_num_Identificacion Bigint not null unique,
     estado varchar(50) not null,
-    saldo double,
+    saldo double not null,
     fecha_apertura varchar(50) not null,
     primary key (num_Cuenta),
     FOREIGN KEY (cl_num_Identificacion) REFERENCES clientes (num_Identificacion)
 );
-insert into productos (num_Cuenta, tip_Cuenta, cl_num_Identificacion,estado,saldo,fecha_apertura)
-values((RAND() * (9999999999 - 1)) + 1,'Ahorro',87945612,'Activo',0,now());
+alter table productos modify saldo double not null;
+
 create table movimientos(
 	id bigint auto_increment primary key,
     pronum_Cuenta bigint not null,
@@ -68,6 +68,10 @@ where p.cl_num_Identificacion=1065829434 and p.estado='Cancelado');
 update productos set estado='Activo', saldo=20000 where num_cuenta=2546714204;
 /*Actualizar campo de tabla*/
 UPDATE clientes SET cl_email ='andres@hotmail.com' WHERE cl_numid = 106582944;
+
+update productos, (select pronum_Cuenta, sum(monto) mysum from movimientos where tp_Movimiento='Consignacion' and pronum_Cuenta=4418795120) m set saldo=mysum where num_Cuenta=4418795120;
+update productos, (select pronum_Cuenta, sum(monto) myrest from movimientos where (tp_Movimiento='Transferencia' or tp_Movimiento='Retiro') and pronum_Cuenta=4418795120) m set saldo=saldo-myrest where num_Cuenta=4418795120;
+
 /*DELETE FROM clientes WHERE cl_numid=106582944;
 select * from productos;
 DELETE FROM productos WHERE pro_numcuenta=106582944;

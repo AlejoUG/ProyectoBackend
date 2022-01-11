@@ -39,7 +39,7 @@ public class ClientesController {
 		return clientes;
 	}
 	
-	@GetMapping
+	@GetMapping//Obtener clientes
 	public List<Clientes> obtenerClientes() {
 		return clientesService.findAll();
 	}

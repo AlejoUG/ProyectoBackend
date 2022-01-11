@@ -23,10 +23,11 @@ public class MovimientosController {
 	@Autowired
 	private MovimientosService movimientosService;
 	
-	@PostMapping("/consignacion/{numCuenta}")
-	public Movimientos guardarMovimientos(@PathVariable("numCuenta") Long numCuenta,@RequestBody Movimientos movimientos) {
+	@PostMapping("/consignacion/{pronumCuenta}")
+	public Movimientos guardarMovimientos(@PathVariable("pronumCuenta") Long pronumCuenta,@RequestBody Movimientos movimientos) {
 		System.out.println(movimientos);
 		movimientosService.guardar(movimientos);
+		//movimientosService.actualizarConsignacion(pronumCuenta);
 		return movimientos;
 	}
 	

@@ -29,8 +29,8 @@ public class Movimientos {
 	@Column
     private Double monto;
 	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date fechaMovimiento;
+	//@Temporal(TemporalType.TIMESTAMP)
+    private String fechaMovimiento;
 	
 	public Movimientos(){}
 
@@ -66,11 +66,11 @@ public class Movimientos {
 		this.monto = monto;
 	}
 
-	public java.util.Date getFechaMovimiento() {
+	public String getFechaMovimiento() {
 		return fechaMovimiento;
 	}
 
-	public void setFechaMovimiento(java.util.Date fechaMovimiento) {
+	public void setFechaMovimiento(String fechaMovimiento) {
 		this.fechaMovimiento = fechaMovimiento;
 	}
 

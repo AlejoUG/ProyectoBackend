@@ -27,8 +27,8 @@ public class Productos {
 	@Column
 	private Double saldo;
 	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private java.util.Date fechaApertura;
+	//@Temporal(TemporalType.TIMESTAMP)
+	private String fechaApertura;
 	
 	public Productos() {
 			/*Long numCuenta, String tipCuenta, Long cl_numIdentificacion, String estado,
@@ -81,11 +81,11 @@ public class Productos {
 		this.saldo = saldo;
 	}
 
-	public java.util.Date getFechaApertura() {
+	public String getFechaApertura() {
 		return fechaApertura;
 	}
 
-	public void setFechaApertura(java.util.Date fechaApertura) {
+	public void setFechaApertura(String fechaApertura) {
 		this.fechaApertura = fechaApertura;
 	}
 
