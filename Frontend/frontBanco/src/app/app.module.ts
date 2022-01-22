@@ -15,8 +15,8 @@ import { ClientesService } from './service/clientes.service';
 import { ProductoService } from './service/producto.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CrearComponent } from './crear/crear.component';
-import { ModificarProductoComponent } from './modificar-producto/modificar-producto.component';
+import { CrearComponent } from './Producto/crear/crear.component';
+import { ModificarProductoComponent } from './Producto/modificar-producto/modificar-producto.component';
 
 const routesApp:Routes=[];
 @NgModule({
