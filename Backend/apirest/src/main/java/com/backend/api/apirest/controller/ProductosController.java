@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,55 +29,52 @@ public class ProductosController {
 	@Autowired
 	private ProductosService productosService;
 	
-	@PostMapping("/{numIdentificacion}")
-	public Productos guardarMovimientos(@PathVariable("numIdentificacion") Long numIdentificacion , @RequestBody Productos productos) {
+	@PostMapping("/{numIdentificacion}") //Crear cuentas	
+	public Productos crearCuentas(@PathVariable("numIdentificacion") Long numIdentificacion , @RequestBody Productos productos) {
 		System.out.println(productos);
 		productosService.guardar(productos);
 		return productos;
 	}
 	
-	@GetMapping
-	public List<Productos> obtenerProductos() {
-		return productosService.findAll();
+	@GetMapping("/cuentas/{clnumIdentificacion}")//Obtener cuentas clientes
+	public List<Productos> findByCl_numIdentificacion(@PathVariable("clnumIdentificacion") Long clnumIdentificacion) {
+		return productosService.listclnumIdentificacion(clnumIdentificacion);
 	}
 	
-	@GetMapping("/{numCuenta}")
+	@GetMapping("/cuenta/{numCuenta}")//obtener cuenta
 	public Productos obtenerProducto(@PathVariable("numCuenta") Long numCuenta) {
-		return productosService.obtenerProducto(numCuenta);
+		return productosService.listnumcuenta(numCuenta);
 	}
 	
-	@PutMapping("/activo/{numCuenta}")
-	public void  pasarActivoInactivo(@PathVariable("numCuenta") Long numCuenta) {
-		productosService.pasarActivoInactivo(numCuenta);
+	@PutMapping("/cancelar/{numCuenta}") //cancelar cuenta de un cliente
+	public Productos cancelar(Productos productos, @PathVariable("numCuenta") Long numCuenta){
+		productos = obtenerProducto(numCuenta);
+		if(productos.getSaldo()==0 && (productos.getEstado().equals("Activo")||productos.getEstado().equals("Inactivo"))) {
+			productos.setEstado("Cancelado");
+		}else {productos.setEstado(productos.getEstado());}
+		
+		return productosService.cambiarestado(productos);
 	}
 	
-	@PutMapping("/inactivo/{numCuenta}")
-	public void pasarInactivoActivo(@PathVariable("numCuenta") Long numCuenta) {
-		productosService.pasarInactivoActivo(numCuenta);
+	@PutMapping("/estado/{numCuenta}") //Modificar estado cuenta de un cliente
+	public Productos cambiarestado(Productos productos, @PathVariable("numCuenta") Long numCuenta){
+		productos = obtenerProducto(numCuenta);
+		if(productos.getEstado().equals("Activo")) {
+			productos.setEstado("Inactivo");
+		}
+		else if(productos.getEstado().equals("Inactivo")) {
+			productos.setEstado("Activo");
+		}
+		else if(productos.getEstado().equals("Cancelado")) {
+			productos.setEstado("Cancelado");
+		}
+		return productosService.cambiarestado(productos);
 	}
 	
-	@PutMapping("/cancelar/{numCuenta}")
-	public void pasarCancelado(@PathVariable("numCuenta") Long numCuenta) {
-		productosService.cancelarCuenta(numCuenta);
+	//Actualizar saldo
+	public Productos actualizarSaldo(Productos productos, @PathVariable("numCuenta") Long numCuenta, Double saldo){
+		productos = obtenerProducto(numCuenta);
+		productos.setSaldo(saldo);
+		return productosService.actualizarSaldo(productos);
 	}
-	
-	/*@PutMapping("/{idProduct}/cancel")
-    public Productos cancelProduct(Productos productos, @PathVariable("numCuenta") Long numCuenta){
-        productos = obtenerProducto(numCuenta);
-        productos.setNumCuenta(numCuenta);
-        productos.setCl_numIdentificacion(productos.getCl_numIdentificacion());
-        productos.setTipCuenta(productos.getTipCuenta());
-        productos.setEstado(productos.getEstado());
-        productos.setFechaApertura(productos.getFechaApertura());
-        productos.setSaldo(productos.getSaldo());
-        if (productos.getSaldo()!=0)
-        {
-            productos.setEstado(productos.getEstado());
-        }
-        else{
-        	productos.setEstado("Cancelado");
-        }
-        return productosService.cambiarEstadoCancelado(productos);
-    }*/
-	
 }

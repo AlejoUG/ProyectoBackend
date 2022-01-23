@@ -25,12 +25,17 @@ public class Movimientos {
 	@JoinColumn(name = "numCuenta")
 	private Long pronumCuenta;
 	@Column
+	@JoinColumn(name = "numCuenta")
+	private Long pronumCuenta2;
+	@Column
 	private String tpMovimiento;
 	@Column
     private Double monto;
 	@Column
 	//@Temporal(TemporalType.TIMESTAMP)
     private String fechaMovimiento;
+	@Column
+	private String descripcion;
 	
 	public Movimientos(){}
 
@@ -41,13 +46,29 @@ public class Movimientos {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Long getPro_numCuenta() {
+	
+	public Long getPronumCuenta() {
 		return pronumCuenta;
 	}
 
-	public void setPro_numCuenta(Long pronumCuenta) {
+	public void setPronumCuenta(Long pronumCuenta) {
 		this.pronumCuenta = pronumCuenta;
+	}
+
+	public Long getPronumCuenta2() {
+		return pronumCuenta2;
+	}
+
+	public void setPronumCuenta2(Long pronumCuenta2) {
+		this.pronumCuenta2 = pronumCuenta2;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public String getTpMovimiento() {
@@ -76,8 +97,9 @@ public class Movimientos {
 
 	@Override
 	public String toString() {
-		return "Movimientos [id=" + id + ", pronumCuenta=" + pronumCuenta + ", tpMovimiento=" + tpMovimiento
-				+ ", monto=" + monto + ", fechaMovimiento=" + fechaMovimiento + "]";
+		return "Movimientos [id=" + id + ", pronumCuenta=" + pronumCuenta + ", pronumCuenta2=" + pronumCuenta2
+				+ ", tpMovimiento=" + tpMovimiento + ", monto=" + monto + ", fechaMovimiento=" + fechaMovimiento
+				+ ", descripcion=" + descripcion + "]";
 	}
 	
 }

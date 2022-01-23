@@ -35,6 +35,7 @@ public class ClientesService {
 		return clientesRepository.save(clientes);
 	}
 	
+	@Transactional //obtener cliente para usar el response entity
 	public Optional<Clientes> findByNumIdentificacion(Long numIdentificacion){
 		return clientesRepository.findByNumIdentificacion(numIdentificacion);
 	}
@@ -44,17 +45,13 @@ public class ClientesService {
 		clientesRepository.eliminarClientesCancelados(numIdentificacion);
 	}
 		
-	/*
-	
-	public void eliminar(Integer numCuenta) {
+	/*public void eliminar(Integer numCuenta) {
 		clientesRepository.deleteById(numCuenta);
 	}
 	
 	public List<Clientes> buscarClientesActivos(Integer numCuenta, String estado){
 		return clientesRepository.buscarClientesActivos(numCuenta, estado);
 	}
-	
-	
 	
 	/*public void setClientesInfoById(Integer numCuenta) {
 		clientesRepository.setClientesInfoById(nombre, apellidos, tpIdentificacion, numIdentificacion, email, fechaNacimiento, numCuenta);

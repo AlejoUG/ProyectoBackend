@@ -21,7 +21,7 @@ public class Productos {
 	private String tipCuenta;
 	@Column
 	@JoinColumn(name = "numIdentificacion")
-    private Long cl_numIdentificacion ;
+    private Long clnumIdentificacion ;
 	@Column
 	private String estado;
 	@Column
@@ -40,6 +40,15 @@ public class Productos {
         this.saldo = saldo;
         this.fechaApertura = fechaApertura;*/
 	}
+	
+	public Productos(Long numCuenta, String tipCuenta, Long clnumIdentificacion, String estado,
+	Double saldo, String fechaApertura){
+		this.numCuenta = numCuenta;
+		this.tipCuenta = tipCuenta;
+		this.clnumIdentificacion = clnumIdentificacion;
+		this.estado = estado;
+		this.saldo = saldo;
+		this.fechaApertura = fechaApertura;}
 
 	public Long getNumCuenta() {
 		return numCuenta;
@@ -57,12 +66,12 @@ public class Productos {
 		this.tipCuenta = tipCuenta;
 	}
 
-	public Long getCl_numIdentificacion() {
-		return cl_numIdentificacion;
+	public Long getClnumIdentificacion() {
+		return clnumIdentificacion;
 	}
 
-	public void setCl_numIdentificacion(Long cl_numIdentificacion) {
-		this.cl_numIdentificacion = cl_numIdentificacion;
+	public void setClnumIdentificacion(Long clnumIdentificacion) {
+		this.clnumIdentificacion = clnumIdentificacion;
 	}
 
 	public String getEstado() {
@@ -91,9 +100,10 @@ public class Productos {
 
 	@Override
 	public String toString() {
-		return "Productos [numCuenta=" + numCuenta + ", tipCuenta=" + tipCuenta + ", cl_numIdentificacion="
-				+ cl_numIdentificacion + ", estado=" + estado + ", saldo=" + saldo + ", fechaApertura=" + fechaApertura
+		return "Productos [numCuenta=" + numCuenta + ", tipCuenta=" + tipCuenta + ", clnumIdentificacion="
+				+ clnumIdentificacion + ", estado=" + estado + ", saldo=" + saldo + ", fechaApertura=" + fechaApertura
 				+ "]";
 	}
+
 	
 }

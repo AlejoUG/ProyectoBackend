@@ -17,10 +17,12 @@ public class MovimientosService {
 	@Autowired
 	private MovimientosRepository movimientosRepository;
 	
+	@Transactional //Hacer movimientos clientes
 	public void guardar(Movimientos movimientos){
 		movimientosRepository.save(movimientos);
 	}
 	
+	@Transactional //Obtener movimientos cliente forma descendente
 	public List<Movimientos> buscarMovimientosClientes(Long pronumCuenta){
 		return movimientosRepository.buscarMovimientosClientes(pronumCuenta);
 	}
@@ -28,6 +30,5 @@ public class MovimientosService {
 	/*@Transactional
 	public void actualizarConsignacion(Long pronumCuenta){
 		movimientosRepository.actualizarConsignacion(pronumCuenta);
-	}*/
-	
+	}*/	
 }

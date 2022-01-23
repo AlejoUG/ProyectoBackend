@@ -15,7 +15,18 @@ import com.backend.api.apirest.model.Productos;
 @Repository
 public interface ProductosRepository extends JpaRepository<Productos, Long> {
 	
-	@Modifying
+	public Productos save(Productos productos);
+	List<Productos> findByClnumIdentificacion(Long clnumIdentificacion);
+	Productos findByNumCuenta(Long numCuenta);
+	
+	//public List<Productos> findAll();
+	/*@Query(value="select * from productos where num_Cuenta=:numCuenta",nativeQuery=true)
+	Optional<Productos> findByNumCuenta(Long numCuenta);
+	//Optional<Productos> estados(@Param("numCuenta") Long numCuenta);
+	
+	//public Productos cambiarEstadoCancelado(Productos productos);*/
+	
+	/*@Modifying
 	@Query(value = "UPDATE Productos SET estado='Inactivo' WHERE num_Cuenta=:numCuenta and estado='Activo'", nativeQuery=true)
 	void pasarActivoInactivo(@Param("numCuenta") Long numCuenta);
 	
@@ -25,17 +36,6 @@ public interface ProductosRepository extends JpaRepository<Productos, Long> {
 	
 	@Modifying
 	@Query(value = "UPDATE Productos SET estado='Cancelado' WHERE num_Cuenta=:numCuenta and saldo=0", nativeQuery=true)
-	void cancelarCuenta(@Param("numCuenta") Long numCuenta);
-	
-	public List<Productos> findAll();
-	public Productos save(Productos productos);
-	
-	/*@Query(value="select * from productos where num_Cuenta=:numCuenta",nativeQuery=true)
-	Optional<Productos> findByNumCuenta(Long numCuenta);
-	//Optional<Productos> estados(@Param("numCuenta") Long numCuenta);
-	
-	//public Productos cambiarEstadoCancelado(Productos productos);*/
-	
-	
+	void cancelarCuenta(@Param("numCuenta") Long numCuenta);*/
 	
 }

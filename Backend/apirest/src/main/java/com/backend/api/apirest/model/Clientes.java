@@ -31,8 +31,6 @@ public class Clientes {
 	@Column
 	//@Temporal(TemporalType.TIMESTAMP)
 	private String fechaCreacion;
-	@Column
-	private String contrasenia;
 	
 	public Clientes(){}
 
@@ -92,19 +90,13 @@ public class Clientes {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	public String getContrasenia() {
-		return contrasenia;
-	}
 
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
-	}
 
 	@Override
 	public String toString() {
 		return "Clientes [numIdentificacion=" + numIdentificacion + ", nombres=" + nombres + ", apellidos=" + apellidos
 				+ ", tpIdentificacion=" + tpIdentificacion + ", email=" + email + ", fechaNacimiento=" + fechaNacimiento
-				+ ", fechaCreacion=" + fechaCreacion + ", contrasenia=" + contrasenia + "]";
+				+ ", fechaCreacion=" + fechaCreacion + "]";
 	}
 	
 }

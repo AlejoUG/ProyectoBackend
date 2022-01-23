@@ -8,51 +8,42 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.backend.api.apirest.interfaceService.InterfaceProductos;
 import com.backend.api.apirest.model.Clientes;
 import com.backend.api.apirest.model.Productos;
 import com.backend.api.apirest.repository.ProductosRepository;
 
 @Service
-public class ProductosService {
+public class ProductosService implements InterfaceProductos{
 	
 	@Autowired
 	private ProductosRepository productosRepository;
 	
-	//Guardar producto
+	@Transactional//Guardar cuenta
 	public void guardar(Productos productos){
 		productosRepository.save(productos);
 	}
 	
-	//Listar productos
-	public List<Productos> findAll(){
-		return productosRepository.findAll();
+	@Transactional//Listar productos clientes
+	public List<Productos> listclnumIdentificacion(Long clnumIdentificacion){
+		return productosRepository.findByClnumIdentificacion(clnumIdentificacion);
 	}
 	
-	//Listar producto
-	public Productos obtenerProducto(Long numCuenta) {
+	@Override
+	@Transactional//Listar num cuenta
+	public Productos listnumcuenta(Long numCuenta) {
 		return productosRepository.getOne(numCuenta);	
 	}
 	
-	//Pasar de activo a inactivo
-	@Transactional
-	public void pasarActivoInactivo(Long numCuenta){
-		productosRepository.pasarActivoInactivo(numCuenta);
+	@Override
+	@Transactional // Modificar estado cuenta
+	public Productos cambiarestado(Productos productos) {
+		return productosRepository.save(productos);
 	}
 	
-	//Pasar de inactivo a activo
-	@Transactional
-	public void pasarInactivoActivo(Long numCuenta){
-		productosRepository.pasarInactivoActivo(numCuenta);
+	@Override
+	@Transactional // Modificar saldo cuenta
+	public Productos actualizarSaldo(Productos productos) {
+		return productosRepository.save(productos);
 	}
-	
-	//Pasar a cancelado
-	@Transactional
-	public void cancelarCuenta(Long numCuenta){
-		productosRepository.cancelarCuenta(numCuenta);
-	}
-	
-	/*public Productos cambiarEstadoCancelado(Productos productos) {
-        return productosRepository.save(productos);
-    }
-	*/	
 }
