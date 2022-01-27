@@ -1,4 +1,4 @@
-package com.backend.api.apirest.model;
+package com.backend.api.apirest.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +13,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "productos")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Productos {
+public class ProductEntity {
 	@Id
 	@Column
 	private Long numCuenta;
 	@Column
 	private String tipCuenta;
 	@Column
-	@JoinColumn(name = "numIdentificacion")
-    private Long clnumIdentificacion ;
+	@JoinColumn(name = "idcliente")
+    private Long clidcliente;
 	@Column
 	private String estado;
 	@Column
@@ -30,22 +30,13 @@ public class Productos {
 	//@Temporal(TemporalType.TIMESTAMP)
 	private String fechaApertura;
 	
-	public Productos() {
-			/*Long numCuenta, String tipCuenta, Long cl_numIdentificacion, String estado,
-			Long saldo, java.util.Date fechaApertura){
-		this.numCuenta = numCuenta;
-        this.tipCuenta = tipCuenta;
-        this.cl_numIdentificacion = cl_numIdentificacion;
-        this.estado = estado;
-        this.saldo = saldo;
-        this.fechaApertura = fechaApertura;*/
-	}
+	public ProductEntity() {}
 	
-	public Productos(Long numCuenta, String tipCuenta, Long clnumIdentificacion, String estado,
+	public ProductEntity(Long numCuenta, String tipCuenta, Long clidcliente, String estado,
 	Double saldo, String fechaApertura){
 		this.numCuenta = numCuenta;
 		this.tipCuenta = tipCuenta;
-		this.clnumIdentificacion = clnumIdentificacion;
+		this.clidcliente = clidcliente;
 		this.estado = estado;
 		this.saldo = saldo;
 		this.fechaApertura = fechaApertura;}
@@ -66,12 +57,12 @@ public class Productos {
 		this.tipCuenta = tipCuenta;
 	}
 
-	public Long getClnumIdentificacion() {
-		return clnumIdentificacion;
+	public Long getClidcliente() {
+		return clidcliente;
 	}
 
-	public void setClnumIdentificacion(Long clnumIdentificacion) {
-		this.clnumIdentificacion = clnumIdentificacion;
+	public void setClidcliente(Long clidcliente) {
+		this.clidcliente = clidcliente;
 	}
 
 	public String getEstado() {
@@ -97,13 +88,5 @@ public class Productos {
 	public void setFechaApertura(String fechaApertura) {
 		this.fechaApertura = fechaApertura;
 	}
-
-	@Override
-	public String toString() {
-		return "Productos [numCuenta=" + numCuenta + ", tipCuenta=" + tipCuenta + ", clnumIdentificacion="
-				+ clnumIdentificacion + ", estado=" + estado + ", saldo=" + saldo + ", fechaApertura=" + fechaApertura
-				+ "]";
-	}
-
 	
 }

@@ -1,8 +1,10 @@
-package com.backend.api.apirest.model;
+package com.backend.api.apirest.Entity;
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -13,8 +15,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "clientes")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Clientes {
+public class CustomerEntity {
 	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idcliente;
 	@Column
 	private Long numIdentificacion;
 	@Column
@@ -26,13 +31,32 @@ public class Clientes {
 	@Column
 	private String email;
 	@Column
-	//@Temporal(TemporalType.DATE)
 	private String fechaNacimiento;
 	@Column
-	//@Temporal(TemporalType.TIMESTAMP)
 	private String fechaCreacion;
 	
-	public Clientes(){}
+	public CustomerEntity(){}
+
+	public CustomerEntity(Long idcliente, Long numIdentificacion, String nombres, String apellidos,
+			String tpIdentificacion, String email, String fechaNacimiento, String fechaCreacion) {
+		super();
+		this.idcliente = idcliente;
+		this.numIdentificacion = numIdentificacion;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.tpIdentificacion = tpIdentificacion;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Long getIdcliente() {
+		return idcliente;
+	}
+
+	public void setIdcliente(Long idcliente) {
+		this.idcliente = idcliente;
+	}
 
 	public Long getNumIdentificacion() {
 		return numIdentificacion;

@@ -1,4 +1,4 @@
-package com.backend.api.apirest.repository;
+package com.backend.api.apirest.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,15 +9,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.backend.api.apirest.model.Clientes;
-import com.backend.api.apirest.model.Productos;
+import com.backend.api.apirest.Entity.CustomerEntity;
+import com.backend.api.apirest.Entity.ProductEntity;
 
 @Repository
-public interface ProductosRepository extends JpaRepository<Productos, Long> {
+public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 	
-	public Productos save(Productos productos);
-	List<Productos> findByClnumIdentificacion(Long clnumIdentificacion);
-	Productos findByNumCuenta(Long numCuenta);
+	/*@Query(value="select count(estado) from productos where (clidcliente=:clidcliente and exists(select estado from productos where clidcliente=clidcliente and estado=('Activo' or 'Inactivo')))", nativeQuery=true)
+	int verificarEstado(@Param("clidcliente") Long clidcliente);*/
+	List<ProductEntity> findByClidcliente(Long clidcliente);
 	
 	//public List<Productos> findAll();
 	/*@Query(value="select * from productos where num_Cuenta=:numCuenta",nativeQuery=true)

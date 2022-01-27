@@ -1,4 +1,4 @@
-package com.backend.api.apirest.model;
+package com.backend.api.apirest.Entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +15,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "movimientos")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Movimientos {
+public class MovementEntity {
 	
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long idmovimiento;
 	@Column
 	@JoinColumn(name = "numCuenta")
 	private Long pronumCuenta;
@@ -32,21 +32,33 @@ public class Movimientos {
 	@Column
     private Double monto;
 	@Column
+    private Double gmf;
+	@Column
 	//@Temporal(TemporalType.TIMESTAMP)
     private String fechaMovimiento;
 	@Column
 	private String descripcion;
 	
-	public Movimientos(){}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public MovementEntity(){}
 	
+	public Double getGmf() {
+		return gmf;
+	}
+
+	public void setGmf(Double gmf) {
+		this.gmf = gmf;
+	}
+
+	public Long getIdmovimiento() {
+		return idmovimiento;
+	}
+
+
+	public void setIdmovimiento(Long idmovimiento) {
+		this.idmovimiento = idmovimiento;
+	}
+
+
 	public Long getPronumCuenta() {
 		return pronumCuenta;
 	}
@@ -93,13 +105,6 @@ public class Movimientos {
 
 	public void setFechaMovimiento(String fechaMovimiento) {
 		this.fechaMovimiento = fechaMovimiento;
-	}
-
-	@Override
-	public String toString() {
-		return "Movimientos [id=" + id + ", pronumCuenta=" + pronumCuenta + ", pronumCuenta2=" + pronumCuenta2
-				+ ", tpMovimiento=" + tpMovimiento + ", monto=" + monto + ", fechaMovimiento=" + fechaMovimiento
-				+ ", descripcion=" + descripcion + "]";
 	}
 	
 }
