@@ -32,7 +32,7 @@ create table movimientos(
     monto double not null,
     gmf double,
     fecha_Movimiento varchar(50) not null,
-    descripcion varchar(50)
+    descripcion varchar(255)
     
     /*FOREIGN KEY (pronum_Cuenta) REFERENCES productos (num_Cuenta)*/
 );
@@ -69,8 +69,8 @@ values (1987013453, 'Ahorro', 2, 'Activo', 0,
  '2022-01-12 07:35:20');
 
 /*Insertar Movimientos*/
-insert into movimientos (pronum_Cuenta, tp_Movimiento, monto, fecha_Movimiento,descripcion) 
-values (1987013452, 'Consignacion', 60000, now(),'Consignacion');
+insert into movimientos (pronum_Cuenta, tp_Movimiento, monto, fecha_Movimiento,descripcion,gmf) 
+values (1987013452, 'Consignacion', 60000, now(),'Consignacion',240);
 update productos set saldo=60000 where num_Cuenta=1987013452;
 insert into movimientos (pronum_Cuenta, tp_Movimiento, monto, fecha_Movimiento,descripcion) 
 values (78260183, 'Consignacion', 160000, now(),'Consignacion');

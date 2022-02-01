@@ -12,5 +12,5 @@ public interface ProductService {
 	public ProductEntity listnumcuenta(Long numCuenta) throws Exception;
 	public ProductEntity cambiarestado(ProductEntity productos);
 	public ProductEntity actualizarSaldo(ProductEntity productos);
-	//public boolean clientePoseeCuentas(Long clidcliente) throws Exception;
+	public boolean cuentaExiste(Long numCuenta) throws Exception;
 }

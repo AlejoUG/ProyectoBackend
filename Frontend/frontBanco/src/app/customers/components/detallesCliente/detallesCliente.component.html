@@ -1,0 +1,23 @@
+<app-navbar1></app-navbar1>
+<p></p>
+<div class="row mt-5 border-dark" *ngIf="clientes">
+  <div class="col-md-4 mx-auto border-dark">
+    <div class="card border-dark" style="width: 18rem;">
+      <div class="card-header text-center border-dark">
+        Detalles cliente
+      </div>
+      <ul class="list-group list-group-flush border-dark bg-light">
+        <li class="list-group-item border-dark bg-light"><b>Nombres: </b>{{clientes.nombres}}</li>
+        <li class="list-group-item border-dark bg-light"><b>Apellidos: </b>{{clientes.apellidos}}</li>
+        <li class="list-group-item border-dark bg-light"><b>Tipo identificacion: </b>{{clientes.tpIdentificacion}}</li>
+        <li class="list-group-item border-dark bg-light"><b>#IDENTIFICACION: </b>{{clientes.numIdentificacion}}</li>
+        <li class="list-group-item border-dark bg-light"><b>Fecha de nacimiento: </b>{{clientes.fechaNacimiento}}</li>
+        <li class="list-group-item border-dark bg-light"><b>Email: </b>{{clientes.email}}</li>
+        <li class="list-group-item border-dark bg-light"><b>Fecha de creacion</b>{{clientes.fechaCreacion}}</li>
+      </ul>
+      <div class="card-footer text-center border-dark bg-light">
+        <button (click)="Volver4()" class="btn btn-outline-secondary btn-block" style="margin-left: 5px;"><i class="fas fa-long-arrow-alt-left"></i> Volver</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<app-navbar1></app-navbar1>
+<p></p>
+<nav class="navbar navbar-light" style="background-color: rgb(247, 247, 247);">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="">
+      <img src="https://images.vexels.com/media/users/3/129288/isolated/lists/52e06e07244a3590366669665ea540e3-icono-de-circulo-de-banco-3.png" height="50" width="50"  alt="">
+      Banco De La Republica
+    </a>
+  </div>
+<hr>
+</nav>
+<p></p>
+<p></p>
+<div class="container col-md-6">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Registrar Cliente</h3>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class="form-group">
+                    <label for="">Nombres: </label>
+                    <input [(ngModel)]="clientes.nombres" name="Nombres" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Apellidos: </label>
+                    <input  [(ngModel)]="clientes.apellidos" name="Apellidos" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Tipo de identificacion: </label>
+                    <select class="form-select" name="Tipo de identificacion" [(ngModel)]="clientes.tpIdentificacion"
+                    required>
+                        <option value="C.C" selected>Cédula ciudadania</option>
+                        <option value="C.E">Cédula extranjeria</option>
+                        <option value="NIT">NIT</option>
+                        <option value="PA">Pasaporte</option>
+                        <option value="T.I">Tarjeta de identidad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Numero de identificacion: </label>
+                    <input  [(ngModel)]="clientes.numIdentificacion" name="Numero de identificacion" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Email: </label>
+                    <input  [(ngModel)]="clientes.email" name="Email" type="text" class="form-control">
+                </div>
+                <div class="nb-4">
+                    <fieldset>
+                        <label for="">Fecha de nacimiento: </label>
+                    |   <input [(ngModel)]="clientes.fechaNacimiento" name="Fecha de nacimiento" type="date" class="form-control"
+                            required="" />
+                    </fieldset>
+                </div>
+                <p></p>
+            </form>
+            <div class="card-footer text-center">
+              <button (click)="Guardar()" class="btn btn-outline-success" style="margin-right: 5px;"><i class="fas fa-check"></i> Confirmar</button>
+              <button (click)="Volver2()" class="btn btn-outline-secondary" style="margin-left: 5px;"><i class="fas fa-long-arrow-alt-left"></i> Volver</button>
+            </div>
+          </div>
+    </div>
+</div>

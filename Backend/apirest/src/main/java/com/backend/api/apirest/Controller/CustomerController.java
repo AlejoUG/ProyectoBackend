@@ -56,7 +56,7 @@ public class CustomerController {
 			msg = "Algo ah fallado. Contactar con suporte";
 			status = HttpStatus.NOT_IMPLEMENTED;
 			respuesta.setMensaje(msg);
-			respuesta.setSuccess(1);
+			respuesta.setSuccess(4);
 		}
 		return new ResponseEntity<>(respuesta,status);
 	}
@@ -79,7 +79,7 @@ public class CustomerController {
 			msg = "Algo ah fallado. Contactar con suporte";
 			status = HttpStatus.NOT_IMPLEMENTED;
 			respuesta.setMensaje(msg);
-			respuesta.setSuccess(1);
+			respuesta.setSuccess(4);
 		}
 		
 		return new ResponseEntity(respuesta, status);
@@ -110,7 +110,7 @@ public class CustomerController {
 			msg = "Algo ah fallado. Contactar con suporte";
 			status = HttpStatus.NOT_IMPLEMENTED;
 			respuesta.setMensaje(msg);
-			respuesta.setSuccess(1);
+			respuesta.setSuccess(4);
 		}
 		return new ResponseEntity(respuesta, status);
 	}
@@ -143,7 +143,7 @@ public class CustomerController {
 		catch(Exception e) {
 			msg = "Algo ah fallado. Contactar con suporte";
 			status = HttpStatus.NOT_IMPLEMENTED;	
-			respuesta.setSuccess(1);
+			respuesta.setSuccess(4);
 			respuesta.setMensaje(msg);
 		}
 		return new ResponseEntity(respuesta,status);
@@ -183,7 +183,7 @@ public class CustomerController {
 		catch(Exception e) {
 			msg = "Algo ah fallado. Contactar con suporte";
 			status = HttpStatus.NOT_IMPLEMENTED;	
-			respuesta.setSuccess(1);
+			respuesta.setSuccess(4);
 			respuesta.setMensaje(msg);
 		}
 		return new ResponseEntity(respuesta,status);

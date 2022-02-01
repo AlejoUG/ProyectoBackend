@@ -1,0 +1,22 @@
+<app-navbar1></app-navbar1>
+<p></p>
+<div class="container col-md-6">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Retirar</h3>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class="form-group">
+                    <label for="">Monto: </label>
+                    <input [(ngModel)]="movimientos1.monto" name="Monto" type="text" class="form-control">
+                </div>
+                <p></p>
+            </form>
+            <div class="card-footer text-center">
+              <button (click)="Guardar()" class="btn btn-outline-success" style="margin-right: 5px;"><i class="fas fa-check"></i> Confirmar</button>
+              <button (click)="Volver2()" class="btn btn-outline-secondary" style="margin-left: 5px;"><i class="fas fa-long-arrow-alt-left"></i> Volver</button>
+            </div>
+          </div>
+    </div>
+</div>

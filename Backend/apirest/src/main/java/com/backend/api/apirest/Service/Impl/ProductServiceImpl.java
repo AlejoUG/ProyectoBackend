@@ -49,6 +49,13 @@ public class ProductServiceImpl implements ProductService{
 		return productRepository.save(productos);
 	}
 	
+	@Override
+	@Transactional //Saber si cliente existe
+	public boolean cuentaExiste(Long numCuenta) throws Exception{
+		return productRepository.existsById(numCuenta);
+	}
+	
+	
 	/*@Transactional
 	public String verificarProductosCliente(Long clidcliente)  {
 		//clientesRepository.eliminarClientesCancelados(numIdentificacion);

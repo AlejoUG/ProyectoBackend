@@ -38,18 +38,7 @@ public class MovementController {
 		List<MovementEntity> data = null;
 		String msg ="";
 		try {
-			System.out.println(data);
 			data = movementServiceImpl.buscarMovimientosClientes(pronumCuenta);
-			System.out.println(data);
-			System.out.println(!movementServiceImpl.cuenaExiste(pronumCuenta));
-			if (!movementServiceImpl.cuenaExiste(pronumCuenta)) {
-				msg="La cuenta no posee movimientos realizados";
-				status = HttpStatus.NOT_FOUND;
-				respuesta.setData(data);
-				respuesta.setMensaje(msg);
-				respuesta.setSuccess(1);
-				return new ResponseEntity(respuesta, status);
-			}
 			msg="Movimientos obtenidos satisfactoriamente";
 			status = HttpStatus.CREATED;
 			respuesta.setData(data);
@@ -82,10 +71,11 @@ public class MovementController {
 			else if(movimientos.getTpMovimiento().equals("Consignacion")) {
 				adicion(productos, movimientos);				
 				msg = "Consignacion realizada exitosamente";
-				status = HttpStatus.CONFLICT;
+				status = HttpStatus.OK;
 				respuesta.setMensaje(msg);
 				respuesta.setSuccess(0);
 				respuesta.setData(movimientos);
+				return new ResponseEntity(respuesta, status);
 			}
 			status= HttpStatus.CONFLICT;
 			respuesta.setSuccess(1);
@@ -209,6 +199,19 @@ public class MovementController {
 		return new ResponseEntity(respuesta, status);
 	}
 	
+	//cuerpo de quien recibe
+	public MovementEntity movimientoQuienRecibe(MovementEntity movimientos, Long pronumCuenta){
+		MovementEntity movimientos1 = new MovementEntity();
+		movimientos1.setDescripcion("Recibio de: "+pronumCuenta+" una transferencia con un monto de $"+ movimientos.getMonto());
+		movimientos1.setFechaMovimiento(movimientos.getFechaMovimiento());
+		movimientos1.setMonto(movimientos.getMonto());
+		movimientos1.setPronumCuenta(movimientos.getPronumCuenta2());
+		movimientos1.setPronumCuenta2(pronumCuenta);
+		movimientos1.setTpMovimiento(movimientos.getTpMovimiento());
+		return movimientos1;
+	}
+	
+	//VERIFICAR QUE CUENTAS CUMPLAN CONDICIONES DE CONSIGNACION, TRANSFERENCIA Y RETIRO
 	public boolean cuentaEstaCancelada (ProductEntity productos) {
 		//Para cancelar movimiento de  retiro cuenta cancelada que desea hacer el movimiento
 		if(productos.getEstado().equals("Cancelado")) {
@@ -231,16 +234,18 @@ public class MovementController {
 	
 	public boolean consultarSaldo(Double saldo, Double monto, ProductEntity productos) {
 		// Para retirar de la cuenta ahorro
-		if (productos.getTipCuenta().equals("Ahorro") && (saldo-(1.004*monto)) >= 0) {
+		if (productos.getTipCuenta().equals("Ahorro") && (saldo-monto) >= 0) {
+		//if (productos.getTipCuenta().equals("Ahorro") && (saldo-(1.004*monto)) >= 0) {
 			return true;
 			}
 	    // Para retirar de la cuenta corriente
-		else if (productos.getTipCuenta().equals("Corriente") && (saldo-(1.004*monto)) >= -2000000) {
+		else if (productos.getTipCuenta().equals("Corriente") && (saldo-monto) >= -2000000) {
+		//else if (productos.getTipCuenta().equals("Corriente") && (saldo-(1.004*monto)) >= -2000000) {
 			return true;
 			}
 		return false;
 		}
-	
+	//MENSAJES
 	public ResponseEntity<GeneralResponse<MovementEntity>> cuentaCancelada(){
 		GeneralResponse<MovementEntity> respuesta = new GeneralResponse<>();
 		String msg = "Cuenta cancelada no puede realizar movimientos bancarios";
@@ -297,7 +302,7 @@ public class MovementController {
 		respuesta.setSuccess(0);
 		return new ResponseEntity(respuesta, HttpStatus.OK);
 	}
-	
+	//Sustracion y adicion
 	public void sustraccion(ProductEntity productos, MovementEntity movimientos) {
 		try {
 			productos.setSaldo(productos.getSaldo()-movimientos.getMonto());
@@ -312,23 +317,22 @@ public class MovementController {
 	
 	public void adicion(ProductEntity productos, MovementEntity movimientos) {
 		try {
-			productos.setSaldo(productos.getSaldo()+movimientos.getMonto());
-			productServiceImpl.actualizarSaldo(productos);
-			movimientos=movementServiceImpl.guardarMovimiento(movimientos);
+			if(productos.getTipCuenta().equals("Ahorro")) {
+				productos.setSaldo(productos.getSaldo()+movimientos.getMonto());
+				productServiceImpl.actualizarSaldo(productos);
+				movimientos=movementServiceImpl.guardarMovimiento(movimientos);
+			}	
+			//Para cancelar movimiento de transferencia cuenta inactiva que desea hacer el movimiento
+			else if(productos.getTipCuenta().equals("Corriente")) {
+				productos.setSaldo(productos.getSaldo()+movimientos.getMonto());
+				productServiceImpl.actualizarSaldo(productos);
+				movimientos.setGmf(movimientos.getMonto()*0.004);
+				movimientos=movementServiceImpl.guardarMovimiento(movimientos);
+			}
 		}
 		catch(Exception e) {
 			
 		}
-	}
-	public MovementEntity movimientoQuienRecibe(MovementEntity movimientos, Long pronumCuenta){
-		MovementEntity movimientos1 = new MovementEntity();
-		movimientos1.setDescripcion("Recibio de: "+pronumCuenta+" un monto de "+ movimientos.getMonto());
-		movimientos1.setFechaMovimiento(movimientos.getFechaMovimiento());
-		movimientos1.setMonto(movimientos.getMonto());
-		movimientos1.setPronumCuenta(movimientos.getPronumCuenta2());
-		movimientos1.setPronumCuenta2(pronumCuenta);
-		movimientos1.setTpMovimiento(movimientos.getTpMovimiento());
-		return movimientos1;
 	}
 	
 	/*@PutMapping("/{pronumCuenta}/2") //Hacer movimientos clientes

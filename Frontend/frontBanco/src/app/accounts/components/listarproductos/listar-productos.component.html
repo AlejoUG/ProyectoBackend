@@ -1,0 +1,40 @@
+<app-navbar1></app-navbar1>
+<p></p>
+<div class="container border-dark">
+    <div class="card bg-light">
+        <div class="card-header text-center">
+            <h3>Cuentas Cliente</h3>
+        </div>
+        <div class="card-body border-dark">
+            <table class="table table-hover text-center border-dark">
+                <thead>
+                    <tr>
+                        <th>#CUENTA</th>
+                        <th>TIPO CUENTA</th>
+                        <th>ESTADO</th>
+                        <th>SALDO</th>
+                        <td>
+                          <button  (click)="Crear()"class="btn btn-outline-secondary" style="margin-right: 5px;"><i class="fas fa-plus"></i> Crear</button>
+                          <button (click)="Volver5()" class="btn btn-outline-secondary" style="margin-left: 5px;"><i class="fas fa-long-arrow-alt-left"></i> Volver</button>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let productos of productos"  class="text-center">
+                        <td>{{productos.numCuenta}}</td>
+                        <td>{{productos.tipCuenta}}</td>
+                        <td>{{productos.estado}}</td>
+                        <td>$ {{productos.saldo}}</td>
+                        <td>
+                            <button routerLink="/cliente/{{productos.clidcliente}}/accounts/{{productos.numCuenta}}/movimientos" class="btn btn-outline-secondary" style="margin-left: 5px;"><i class="fas fa-eye"></i></button>
+                            <button (click)="activar(productos)" class="btn btn-outline-success" style="margin-left: 5px;"><i class="fas fa-exchange-alt"></i></button>
+                            <button (click)="inactivar(productos)" class="btn btn-outline-warning" style="margin-left: 5px;"><i class="fas fa-exchange-alt"></i></button>
+                            <button (click)="cancelar(productos)"class="btn btn-outline-danger" style="margin-left: 5px;"><i class="far fa-window-close"></i></button>
+                            <!-- <button (click)="Eliminar(clientes)"class="btn btn-outline-danger" style="margin-left: 5px;"><i class="fas fa-trash"></i></button> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

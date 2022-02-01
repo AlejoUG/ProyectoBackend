@@ -8,6 +8,5 @@ public interface MovementService {
 	
 	public MovementEntity guardarMovimiento(MovementEntity movimientos) throws Exception;
 	public List<MovementEntity> buscarMovimientosClientes(Long pronumCuenta) throws Exception;
-	public boolean cuenaExiste(Long pronumCuenta) throws Exception;
 	
 }

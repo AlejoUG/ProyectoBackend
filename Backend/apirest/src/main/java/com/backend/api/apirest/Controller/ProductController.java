@@ -2,6 +2,7 @@ package com.backend.api.apirest.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.websocket.server.PathParam;
 
@@ -35,8 +36,16 @@ public class ProductController {
 		ProductEntity data=null;
 		HttpStatus status = null;
 		String msg ="";
+		Random random = new Random();
+		boolean existe=true;
 		System.out.println(productos);
+		long x;
 		try {
+			x=random.nextLong(1999999999);
+			while(productServiceImpl.cuentaExiste(x)==existe) {
+				x=random.nextLong(1999999999);
+			}
+			productos.setNumCuenta(x);
 			data=productServiceImpl.crearCuentaCliente(productos);
 			msg = "Cuenta creada exitosamente";
 			status = HttpStatus.CREATED;
@@ -45,7 +54,7 @@ public class ProductController {
 			respuesta.setSuccess(0);
 		}
 		catch(Exception e) {
-			msg = "No se pudo crear la cuenta verifique que todos los campos esten ingresados";
+			msg = "Algo ah fallado. Contactar con suporte";
 			status = HttpStatus.NOT_IMPLEMENTED;
 			respuesta.setMensaje(msg);
 			respuesta.setSuccess(1);
@@ -59,13 +68,23 @@ public class ProductController {
 		HttpStatus status = null;
 		List<ProductEntity> productos = null;
 		String msg ="";
+		boolean bandera=true;
 		try {
 			productos = productServiceImpl.listarCuentasCliente(clidcliente);
-			status = HttpStatus.OK;
-			msg="Lista de cuentas del cliente";
-			respuesta.setData(productos);
-			respuesta.setMensaje(msg);
-			respuesta.setSuccess(0);
+			if(existeCuentas(productos, clidcliente)==bandera) {
+				status = HttpStatus.OK;
+				msg="Lista de cuentas del cliente";
+				respuesta.setData(productos);
+				respuesta.setMensaje(msg);
+				respuesta.setSuccess(0);
+			}
+			else {
+				msg = "Cliente no posee cuentas";
+				status = HttpStatus.NOT_FOUND;
+				respuesta.setMensaje(msg);
+				respuesta.setSuccess(1);
+				return new ResponseEntity(respuesta,status);
+			}
 		}
 		catch(Exception e) {
 			msg = "Algo ah fallado. Contactar con suporte";
@@ -175,14 +194,14 @@ public class ProductController {
 	
 	@PutMapping("/accounts/{numCuenta}/cancel") //cancelar cuenta de un cliente
 	public ResponseEntity<GeneralResponse<ProductEntity>>  cancelar(ProductEntity productos, @PathVariable("numCuenta") Long numCuenta){
-		boolean estado=false;
+		int estado=0;
 		GeneralResponse<ProductEntity> respuesta = new GeneralResponse<>();
 		HttpStatus status = null;
 		String msg ="";
 		try {
 			productos=productServiceImpl.listnumcuenta(numCuenta);
 			estado=saberSiCuentaSePuedeCancelar(productos);
-			if(estado==true) {
+			if(estado==1) {
 				productos.setEstado("Cancelado");
 				productos=productServiceImpl.cambiarestado(productos);
 				msg = "Cuenta cancelada exitosamente";
@@ -191,15 +210,24 @@ public class ProductController {
 				respuesta.setMensaje(msg);
 				respuesta.setSuccess(3);
 			}
-			else {
+			else if(estado==2) {
 				productos.setEstado(productos.getEstado());
 				productos=productServiceImpl.cambiarestado(productos);
-				msg = "No se puede cancelar la cuenta posee saldo en la cuenta";
-				status = HttpStatus.OK;
+				msg = "La cuenta ya se encuentra cancelada";
+				status = HttpStatus.CONFLICT;
 				respuesta.setData(productos);
 				respuesta.setMensaje(msg);
 				respuesta.setSuccess(1);
 				}
+			else {
+				productos.setEstado(productos.getEstado());
+				productos=productServiceImpl.cambiarestado(productos);
+				msg = "No se puede cancelar posee saldo en la cuenta";
+				status = HttpStatus.CONFLICT;
+				respuesta.setData(productos);
+				respuesta.setMensaje(msg);
+				respuesta.setSuccess(1);
+			}
 		}
 		catch(Exception e) {
 			msg = "Algo ah fallado. Contactar con suporte";
@@ -224,11 +252,25 @@ public class ProductController {
 		return productServiceImpl.cambiarestado(productos);
 	}
 	
-	public boolean saberSiCuentaSePuedeCancelar(ProductEntity productos) {
-		boolean estadoBandera = false;
+	public Integer saberSiCuentaSePuedeCancelar(ProductEntity productos) {
+		int estadoBandera = 0;
 		if(productos.getSaldo()==0 && (productos.getEstado().equals("Activo")||productos.getEstado().equals("Inactivo"))) {
-			return true;
-		}	
+			return 1;
+		}
+		else if(productos.getEstado().equals("Cancelado")) {
+			return 2;
+		}
+		return estadoBandera;
+	}
+	
+	public boolean existeCuentas(List<ProductEntity> productoCliente, Long clidcliente) {
+		boolean estadoBandera = false;
+		for (int i = 0; i < productoCliente.size(); i++) {
+			if (productoCliente.get(i).getClidcliente().equals(clidcliente)) {
+				estadoBandera = true;
+				break;
+			}
+		}
 		return estadoBandera;
 	}
 	

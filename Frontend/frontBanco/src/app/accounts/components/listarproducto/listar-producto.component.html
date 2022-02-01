@@ -1,0 +1,85 @@
+<nav class="navbar navbar-light bg-light" style="background-color: rgb(156, 156, 156);">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="">
+      <img src="https://images.vexels.com/media/users/3/129288/isolated/lists/52e06e07244a3590366669665ea540e3-icono-de-circulo-de-banco-3.png" height="50" width="50"  alt="">
+      Banco De La Republica
+    </a>
+    <form class="form-inline my-2 my-lg-0">
+      <button (click)="Volver4()" class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="margin-left: 20px ;"> <i class="fas fa-long-arrow-alt-left"></i> Volver</button>
+    </form>
+  </div>
+<hr>
+</nav>
+<p></p>
+<!-- Tarjetas -->
+<div class="container mt-5">
+<div class="card-group text-center ">
+  <div class="card border-dark bg-light">
+    <div class="card-body">
+      <h5 class="card-title" style="text-align:left">Disponible:</h5>
+      <ul class="list-group list-group-flush bg-light">
+        <li class="list-group-item bg-light"><b>$ {{productos1.saldo}}</b></li>
+      </ul>
+      <ul class="list-group list-group-flush bg-light" style="text-align:left">
+        <li class="list-group-item bg-light">{{productos1.tipCuenta}} {{productos1.numCuenta}}</li>
+      </ul>
+    </div>
+  </div>
+  <p></p>
+  <div class="card text-center bg-light border-dark">
+    <div class="card-body">
+      <h5 class="card-title" style="text-align:right">Accesos rápidos</h5>
+      <p class="card-text mt-3">¿Que desea hacer?</p>
+    </div>
+    <div class="card-header mx-auto">
+      <ul class="nav nav-pills card-header-pills">
+        <li class="nav-item">
+          <a class="nav-link" style="margin-left: 5px;"
+          href="cliente/{{productos1.clidcliente}}/accounts/{{productos1.numCuenta}}/movimientos/consignar"><i class="fas fa-hand-holding-usd"></i> Consignar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="margin-left: 5px;"
+          href="cliente/{{productos1.clidcliente}}/accounts/{{productos1.numCuenta}}/movimientos/retirar"><i class="fas fa-cart-arrow-down"></i> Retirar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="margin-left: 5px;"
+          href="cliente/{{productos1.clidcliente}}/accounts/{{productos1.numCuenta}}/movimientos/transferir"><i class="fas fa-paper-plane"></i> Transferir</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Tabla movimientos -->
+<p></p>
+<div class="container border-dark">
+    <div class="card bg-light">
+        <div class="card-header text-center">
+            <h3>Movimientos</h3>
+        </div>
+        <div class="card-body border-dark">
+            <table class="table table-hover text-center border-dark">
+                <thead>
+                    <tr>
+                        <th>Tipo Movimiento</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Descripcion</th>
+                        <th>GMF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let movimientos of movimientos1"  class="text-center">
+                        <td>{{movimientos.tpMovimiento}}</td>
+                        <td>$ {{movimientos.monto}}</td>
+                        <td>{{movimientos.fechaMovimiento}}</td>
+                        <td>{{movimientos.descripcion}}</td>
+                        <td>{{movimientos.gmf}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

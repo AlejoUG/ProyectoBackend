@@ -28,11 +28,6 @@ public class MovementServiceImpl implements MovementService{
 	public List<MovementEntity> buscarMovimientosClientes(Long pronumCuenta) throws Exception{
 		return movementRepository.buscarMovimientosClientes(pronumCuenta);
 	}
-	
-	@Override
-	@Transactional //Saber si cliente existe
-	public boolean cuenaExiste(Long pronumCuenta) throws Exception{
-		return movementRepository.existsById(pronumCuenta);
-	}
+
 	
 }
